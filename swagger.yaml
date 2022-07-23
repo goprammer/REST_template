@@ -1,0 +1,172 @@
+basePath: /
+consumes:
+- application/json
+securityDefinitions:
+  key:
+    type: apiKey
+    in: header
+    name: X-Auth-Key
+security:
+  - key: []
+definitions:
+  SingleID:
+    properties:
+      id:
+        format: int64
+        minimum: 1
+        type: integer
+        x-go-name: ID
+    type: object
+    x-go-package: api_example
+  SingleUser:
+    description: SingleUser
+    properties:
+      id:
+        description: |-
+          The ID for the user
+          in: body
+        format: int64
+        minimum: 1
+        type: integer
+        x-go-name: ID
+      name:
+        description: |-
+          The Name of the user
+          in: body
+        type: string
+        x-go-name: Name
+      password:
+        description: The Password of the user
+        type: string
+        x-go-name: Password
+    required:
+    - id
+    - name
+    - password
+    type: object
+    x-go-package: api_example
+host: localhost
+info:
+  description: Standard example of turning go code into swagger.
+  title: Example RESTful Server with Swagger notation.
+  version: 1.0.0
+paths:
+  /*:
+    get:
+      operationId: NotFound
+      responses:
+        "404":
+          $ref: '#/responses/NotFound'
+      summary: Works with all methods.
+      tags:
+      - NotFoundHandler
+  /add:
+    post:
+      operationId: AddUserParam
+      parameters:
+      - description: Requested information for a single user.
+        in: body
+        name: Body
+        schema:
+          $ref: '#/definitions/SingleUser'
+      responses:
+        "201":
+          $ref: '#/responses/Created'
+        "400":
+          $ref: '#/responses/BadRequest'
+        "401":
+          $ref: '#/responses/Unauthorized'
+        "409":
+          $ref: '#/responses/Conflict'
+      tags:
+      - AddUser
+  /delete:
+    delete:
+      operationId: deleteUser
+      parameters:
+      - description: Client provides ID for user it wants info for.
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/SingleID'
+      responses:
+        "204":
+          $ref: '#/responses/NoContent'
+        "400":
+          $ref: '#/responses/BadRequest'
+        "401":
+          $ref: '#/responses/Unauthorized'
+        "404":
+          $ref: '#/responses/NotFound'
+      tags:
+      - DeleteUser
+  /get:
+    get:
+      operationId: getUser
+      parameters:
+      - description: Client provides ID for user it wants info for.
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/SingleID'
+      responses:
+        "200":
+          $ref: '#/responses/UserResponse'
+        "400":
+          $ref: '#/responses/BadRequest'
+        "401":
+          $ref: '#/responses/Unauthorized'
+        "404":
+          $ref: '#/responses/NotFound'
+      summary: Matches id to find a single user.
+      tags:
+      - GetSingleUser
+  /update:
+    put:
+      operationId: UserParam
+      parameters:
+      - description: Requested information for a single user.
+        in: body
+        name: Body
+        schema:
+          $ref: '#/definitions/SingleUser'
+      responses:
+        "204":
+          $ref: '#/responses/NoContent'
+        "400":
+          $ref: '#/responses/BadRequest'
+        "401":
+          $ref: '#/responses/Unauthorized'
+        "404":
+          $ref: '#/responses/NotFound'
+      tags:
+      - UpdateUser
+produces:
+- application/json
+responses:
+  BadRequest:
+    description: 'Error: Couldn''t read client''s json. HTTP status code 400 in header.'
+  Conflict:
+    description: 'Error: User already exists. HTTP status code 409 in header.'
+  Created:
+    description: 'Success: Created user. HTTP status code 201 in header.'
+  NoContent:
+    description: 'Success: Completed request, but no content to return. HTTP status
+      code 204 in header.'
+  NotFound:
+    description: 'Error: Couldn''t find user. HTTP status code 404 in header.'
+  OK:
+    description: 'Success: Your requested content has been sent in response body.
+      HTTP status code 200 in header.'
+  Unauthorized:
+    description: 'Error: API creditials have been rejected. HTTP status code 401 in
+      header.'
+  UserResponse:
+    description: ""
+    schema:
+      $ref: '#/definitions/SingleUser'
+schemes:
+- http
+swagger: "2.0"
