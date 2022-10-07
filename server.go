@@ -163,14 +163,13 @@ func GetSingleUser (w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
-
 	id := &SingleID{}
 	err := json.NewDecoder(r.Body).Decode(id)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	
+	log.Println(id.ID)
 	user, ok := allUsers[id.ID]
 	if ok {
 		w.WriteHeader(http.StatusOK)
